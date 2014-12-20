@@ -1,0 +1,56 @@
+On pourrait se donner le cahier des charges suivant:
+- Langage à visées pédagogiques (collège pour les plus courageux/lycée voire prépa) ;
+- MAIS Structures proches des langages standard (c/c++/java/python... COBOL :D) ;
+- Possibilité de changer la langue des mots-clefs - on fait anglais français et je me charge de l'allemand - ;
+- Possibilité de construire des vrais programmes pour n'importe quelle tâche algorithmique même un peu poussée ;
+- DONC Récursivité possible ;
+- Debugging ligne à ligne fiable (très important ça) ;
+- Rapidité d'exécution raisonnable ;
+- Typage statique, parce que sinon c'est rapidement le chaos ;
+- Capacité à gérer de la mémoire par pointeurs (aucun langage pédagogique à ma connaissance ne t'apprend à faire ça) ;
+- Piles ;
+- Fonctions mathématiques implémentées également, y compris sur des grands nombres (cf. TD M. Troesch) ;
+- Gestion des infinis, du calcul dans des anneaux etc. ;
+- Indentation sans effet sur le code ;
+- Dépendances bibliothèques les plus cachées possibles sur les modules de base.
+
+Une idée de syntaxe (j'ai juste recopiée en le modifiant le pseudo-code de quicksort de wikipedia)
+
+function partitionner | array T, integer Pr, integer De, integer Pi -> integer J {
+
+	exchange T[Pi] with T[De] ;
+	J = Pr ;
+	declare integer I ;
+	for I = Pr to De {
+		if T[I] <= T[De] {
+			exchange T[I] with T[J] ;
+			increment J ;
+		}
+	}
+	exchange T[De] with T[J] ;
+	return ; #retourne automatiquement J puisque c'est la variable qu'on a déclarée comme variable de sortie au départ
+}
+
+function tri_rapide | array T, integer Pr, integer De {
+
+ENTRY POINT
+	declare integer Pi ;
+	if Pr < De {
+		Pi = Pr ;
+		Pi = partitionner(T, Pr, De) ; 
+		tri_rapide(T, Pr, Pi - 1) ;
+		tri_rapide(T, Pi + 1, De) ;
+	}
+END
+
+}
+
+ tri_rapide(tableau t, entier premier, entier dernier)
+   début
+     si premier < dernier alors
+       pivot := choix_pivot(t, premier, dernier)
+       pivot := partitionner(t, premier, dernier, pivot)
+       tri_rapide(t ,premier, pivot-1)
+       tri_rapide(t, pivot+1, dernier)
+     fin si
+   fin
