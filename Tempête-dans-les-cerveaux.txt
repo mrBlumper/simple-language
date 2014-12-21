@@ -54,3 +54,52 @@ END
        tri_rapide(t, pivot+1, dernier)
      fin si
    fin
+
+=============== EDIT ==========
+Pour les tab ça ce fera en peu de ligne lors de la lecture des fichiers sources
+Pour le debuggage ligne par ligne si on concoit le code en fonction dès le début ce ne sera pas super dur je pense (tant que l'on sait la ligne et le fichier de l'instruction en cours d'éxecution ce sera bon)
+Pour la recursion si on implemente bien les fonctions c'est bon
+Les piles sont des tableaux décorées, on aura qu'a faire une lib standard :)
+De même pour le calcul dans les anneaux (on rajoute juste un modulo aprés les operations O:) )
+
+Typage prédefini?
+	Du genre on donne le type de la variable lors de sa def ou a sa premiére affectation?
+On gerera les nombres infinis de base je pense (enfin j'espere)
+Quels types seront predefini de bases? Integer, Decimal, String et List?
+
+
+Remarque niveau syntaxe:
+Pour le for, ok pour une syntaxe en : "for var from 1 to 10 step 1:". La syntaxe façon python 'for i in...' peut être pas mal pour itérer sur les elements d'une liste
+Par contre, je suis pas pour du tout ton exemple de syntaxe de fonction: "function partitionner | array T, integer Pr, integer De, integer Pi -> integer J"
+Je trouve personnellement que la variable de retour est dur a reperer (a vrai dire sans ton commentaire je n'aurais jamais compris que J etais retourne automatiquement). COmme notre language à un but educatif il vaut mieux être le plus clair possible (quittes à être trop verbeux)
+Les mots clefs "increment", "exchange" sont une excellente idée! On garde!
+
+Implementation:
+Je pense qu'on devrais partager le travail en 3 parts.
+Prenons en exemple le programme suivant:
+"	Declare Integer A, B = 42 * 2, 5
+	SWAP A WITH B
+	print ("ba!", A, B) "
+Phase 1: analyse du fichier et decoupage en element de base
+Ici ça nous donne la suite de tokens suivant:
+[keyword: DECLARE][TYPE: INTEGER][WORD: A][COMA][WORD: B][EQUAL][number: 42][operator: mult][number:2][coma][number:5]
+[keyword: swap][WORD: A][keyword: with][WORD: B]
+[word: print][paranthesis open][string: ba!][COMA][WORD: A][COMA][WORD: B][paranthesis close]
+Au cours de cette etape on supprime les tabs/comments...
+
+Phase 2: on fait l'analyse lexicale (on trouve les erreurs et donne sens a notre suite de tokens
+Toujours pour le meme programme:
+[Declare variable A as integer]
+[Declare variable B as integer]
+[Affect value to A: [expression: [number: 42][operator: mult][number:2]]]
+[Affect value to A: [expression: [number: 5]]]
+[SWAP A, B]
+[call function print with paramete: [string: ba!],[WORD: A],[WORD: B]]
+
+Phase 3: on execute les expressions trouve a l'etape 2
+
+On va avoir besoin de regex pour la partie 1 probablement et la partie 2 surement (mais elles devront être adapté). Je peux me charger de les implementer dans la semaine(pas envie d'installer de lib externe)
+
+
+Sinon, il faut que tu apprennes la programmation orienté objet en c++! (polymorphime, ...). Ca nous permettra d'avoir un code plus propre, lisible et modulable :D
+
